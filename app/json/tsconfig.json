@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["app/*"],
+      "@auth/*": ["app/auth/*"],
+      "@config/*": ["app/config/*"],
+      "@navigation/*": ["app/navigation/*"],
+      "@notifications/*": ["app/notifications/*"],
+      "@providers/*": ["app/providers/*"],
+      "@services/*": ["app/services/*"],
+      "@storage/*": ["app/services/storage/*"],
+      "@api/*": ["app/services/api/*"],
+      "@ui/*": ["app/ui/*"],
+      "@hooks/*": ["app/hooks/*"],
+      "@store/*": ["src/redux/*"]
+    }
+  }
+}
