@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons'; // ✅ Ionicons로 교체
 import { timeAgo } from '../../../../common/dataUtil/dateUtil';
 import { useNavigation } from '@react-navigation/native';
 import ProfileImage from '../../../../common/imageUtil/ProfileImage';
@@ -68,14 +68,16 @@ const VideoItemHeader = ({ videoData, currentUser, onModalOpen }) => {
             )}
           </View>
           <TouchableOpacity onPress={handleMorePress}>
-            <Icon name="more-horiz" size={24} color="gray" style={styles.moreIcon} />
+            <Icon name="ellipsis-horizontal" size={22} color="gray" style={styles.moreIcon} /> 
+            {/* ✅ Ionicons 더보기 아이콘 */}
           </TouchableOpacity>
         </View>
 
         {videoData.address && (
           <View style={styles.locationRow}>
             <TouchableOpacity onPress={handleLocationPress} style={styles.locationTouchable}>
-              <Icon name="place" size={14} color="black" />
+              <Icon name="location-outline" size={14} color="black" /> 
+              {/* ✅ Ionicons 위치 아이콘 */}
               <Text style={styles.locationText}>{getFormattedLocation(videoData.address)}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleStoreNamePress}>

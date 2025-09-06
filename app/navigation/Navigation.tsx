@@ -43,7 +43,7 @@ const Stack = createNativeStackNavigator();
 const Navigation: React.FC = () => {
   const { isLoggedIn, role, login } = useAuth();
 
-  if (role === 'ROLE_GUEST') {
+  if (role === 'ROLE_GUEST' || !isLoggedIn) {
     return (
       <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
         <Stack.Screen

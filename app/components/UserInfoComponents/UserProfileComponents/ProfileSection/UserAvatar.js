@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Image, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const UserAvatar = ({ profileImage, onPress }) => {
   return (
@@ -13,7 +13,7 @@ const UserAvatar = ({ profileImage, onPress }) => {
       {profileImage ? (
         <Image source={profileImage} style={styles.image} />
       ) : (
-        <Icon name="account-circle" size={90} color="#FF7F50" />
+        <Icon name="person-circle-outline" size={90} color="#FF7F50" />
       )}
     </TouchableOpacity>
   );

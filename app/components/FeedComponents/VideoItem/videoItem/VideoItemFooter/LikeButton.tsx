@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons'; // ✅ Ionicons로 교체
 import { useLikeHooks } from '../../../../videoComponents/videoComponetHooks/likeHooks';
 import ClusterBottomModal from '../../../FeedItem/ClusterBottomModal';
 
@@ -11,7 +11,11 @@ const LikeButton = ({ storeId, initialLikeYn, initialLikeCount }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleLikePress = useCallback(async () => {
-    const { updatedLikeConut, updatedLikeYn } = await axiosLikeCall(storeId, likeYn, likeCount);
+    const { updatedLikeConut, updatedLikeYn } = await axiosLikeCall(
+      storeId,
+      likeYn,
+      likeCount
+    );
     setLikeYn(updatedLikeYn);
     setLikeCount(updatedLikeConut);
   }, [axiosLikeCall, storeId, likeYn, likeCount]);
@@ -20,7 +24,7 @@ const LikeButton = ({ storeId, initialLikeYn, initialLikeCount }) => {
     <View style={styles.wrapper}>
       <TouchableOpacity onPress={handleLikePress} style={styles.likeButton}>
         <Icon
-          name={likeYn === 'Y' ? 'favorite' : 'favorite-border'}
+          name={likeYn === 'Y' ? 'heart' : 'heart-outline'} // ✅ Ionicons 하트로 교체
           size={24}
           color="#FF7F50"
         />

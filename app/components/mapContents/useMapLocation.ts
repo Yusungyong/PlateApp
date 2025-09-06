@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react';
-import Geolocation from 'react-native-geolocation-service';
 import { Region } from 'react-native-maps';
 import type { RefObject } from 'react';
 import type MapView from 'react-native-maps';
+import { requestAndFetchLocation, type LatLng } from '../../common/locationUtils';
 
 type Location = {
   latitude: number;
@@ -19,7 +19,7 @@ const DEFAULT_REGION: Region = {
 const useMapLocation = (
   initialRegion: Region = DEFAULT_REGION,
   mapRef?: RefObject<MapView>,
-  onRegionChanged?: (region: Region) => void // 👈 콜백 추가
+  onRegionChanged?: (region: Region) => void
 ) => {
   const [mapCenter, setMapCenter] = useState<Location>({
     latitude: initialRegion.latitude,
@@ -31,44 +31,41 @@ const useMapLocation = (
 
   const triggerRadiusBlink = useCallback(() => {
     setFillColor('rgba(0,122,255,0.02)');
-    setTimeout(() => {
-      setFillColor('rgba(0,122,255,0.25)');
-    }, 300);
+    setTimeout(() => setFillColor('rgba(0,122,255,0.25)'), 300);
   }, []);
 
-  const requestUserLocation = useCallback(() => {
-    Geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        const region = {
-          latitude,
-          longitude,
+  // ✅ 유틸 사용: 권한요청 + 위치조회 + 맵 이동
+  const requestUserLocation = useCallback(async () => {
+    await requestAndFetchLocation(
+      // success
+      (loc: LatLng) => {
+        const region: Region = {
+          latitude: loc.latitude,
+          longitude: loc.longitude,
           latitudeDelta: 0.02,
           longitudeDelta: 0.02,
         };
-
-        setMapCenter({ latitude, longitude });
+        setMapCenter({ latitude: loc.latitude, longitude: loc.longitude });
         setMapDelta(0.02);
         setLocationError(null);
-
-        if (onRegionChanged) onRegionChanged(region); // 👈 여기!
-        if (mapRef?.current) {
-          mapRef.current.animateToRegion(region, 500);
-        }
+        onRegionChanged?.(region);
+        mapRef?.current?.animateToRegion(region, 700);
       },
-      (error) => {
-        console.log('📍 위치 요청 실패:', error.message);
-        setLocationError(error.message);
-      },
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+      // error
+      (msg: string) => {
+        setLocationError(msg);
+      }
     );
   }, [mapRef, onRegionChanged]);
 
-  const setRegionManually = useCallback((region: Region) => {
-    setMapCenter({ latitude: region.latitude, longitude: region.longitude });
-    setMapDelta(region.latitudeDelta);
-    if (onRegionChanged) onRegionChanged(region); // 👈 여기!
-  }, [onRegionChanged]);
+  const setRegionManually = useCallback(
+    (region: Region) => {
+      setMapCenter({ latitude: region.latitude, longitude: region.longitude });
+      setMapDelta(region.latitudeDelta);
+      onRegionChanged?.(region);
+    },
+    [onRegionChanged]
+  );
 
   return {
     mapCenter,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/Ionicons'; // ✅ Ionicons로 변경
 
 const FriendFinderButton = ({ onPress }) => {
   return (
@@ -10,7 +10,8 @@ const FriendFinderButton = ({ onPress }) => {
       accessibilityLabel="친구 찾기"
       accessible
     >
-      <Icon name="magnify" size={20} color="#fff" style={styles.icon} />
+      <Icon name="search-outline" size={20} color="#fff" style={styles.icon} />
+      {/* ✅ Ionicons 검색 아이콘 */}
       <Text style={styles.text}>친구</Text>
     </TouchableOpacity>
   );

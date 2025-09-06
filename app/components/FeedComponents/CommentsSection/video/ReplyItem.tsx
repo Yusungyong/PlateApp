@@ -8,7 +8,7 @@ import {
   Animated,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons'; // ✅ Ionicons로 교체
 import { formatDistanceToNow, formatISO } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -152,7 +152,8 @@ const ReplyItem = forwardRef(({
         <View style={styles.headerRow}>
           <Text style={styles.username}>{reply.username}</Text>
           <TouchableOpacity onPress={() => setModalVisible(true)}>
-            <Icon name="more-horiz" size={20} color="#888" />
+            <Icon name="ellipsis-horizontal" size={20} color="#888" /> 
+            {/* ✅ Ionicons 가로 점 3개 */}
           </TouchableOpacity>
         </View>
 

@@ -14,15 +14,20 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  // Google Maps API 키 (가능하면 Info.plist에서 읽어오기 권장)
-  [GMSServices provideAPIKey:@"<YOUR_IOS_MAPS_API_KEY>"];
+  // ✅ Google Maps API 키 (Info.plist에서 읽어오기)
+  NSString *apiKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"GMSApiKey"];
+  if (apiKey != nil && [apiKey length] > 0) {
+    [GMSServices provideAPIKey:apiKey];
+  } else {
+    NSLog(@"[Error] GMSApiKey not found in Info.plist or is empty");
+  }
 
   // ✅ Firebase 기본 앱 초기화 (중복 호출 방지)
   if ([FIRApp defaultApp] == nil) {
     [FIRApp configure];
   }
 
-  // (선택) iOS 10+ 포그라운드 알림 표시를 원할 때
+  // ✅ iOS 10+ 포그라운드 알림 표시 Delegate 설정
   if (@available(iOS 10.0, *)) {
     [UNUserNotificationCenter currentNotificationCenter].delegate = self;
   }

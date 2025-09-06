@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons'; // ✅ Ionicons로 교체
 import { useNavigation } from '@react-navigation/native';
 import ClusterModal from './ClusterModal';
 
@@ -32,7 +32,8 @@ const PlaceInfoHeader = ({ feedData }) => {
       {feedData.location && (
         <View style={styles.locationRow}>
           <TouchableOpacity onPress={handleLocationPress} style={styles.locationTouchable}>
-            <Icon name="place" size={14} color="black" />
+            <Icon name="location-outline" size={14} color="black" /> 
+            {/* ✅ Ionicons 위치 아이콘 */}
             <Text style={styles.locationText}>{formatLocation(feedData.location)}</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleStorePress}>
@@ -76,7 +77,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 8,
   },
-  
 });
 
 export default PlaceInfoHeader;

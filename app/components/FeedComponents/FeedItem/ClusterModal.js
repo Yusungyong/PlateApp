@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons'; // ✅ Ionicons로 교체
 import { useNavigation } from '@react-navigation/native';
 import BottomSlideModal from './BottomSlideModal';
 import usePlaceInfo from '../../../common/usePlaceInfo';
@@ -51,7 +51,6 @@ const ClusterModal = ({ visible, onClose, placeId, storeName }) => {
   const handleFeedPress = () => {
     onClose();
     navigation.navigate('HomeFeed', {
-      // feedId: feedIds,
       placeId,
       refresh: true,
     });
@@ -68,11 +67,13 @@ const ClusterModal = ({ visible, onClose, placeId, storeName }) => {
         <Text style={styles.storeName}>{storeName}</Text>
         <View style={styles.countContainer}>
           <TouchableOpacity style={styles.countItem} onPress={handlePlayPress}>
-            <Icon name="play-arrow" size={24} color="#000" />
+            <Icon name="play" size={22} color="#000" /> 
+            {/* ✅ Ionicons play 아이콘 */}
             <Text style={styles.countText}>{storeCount}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.countItem} onPress={handleFeedPress}>
-            <Icon name="chat" size={24} color="#000" />
+            <Icon name="chatbubble-outline" size={22} color="#000" /> 
+            {/* ✅ Ionicons chat 아이콘 */}
             <Text style={styles.countText}>{feedCount}</Text>
           </TouchableOpacity>
         </View>

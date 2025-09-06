@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Animated,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons'; // ✅ Ionicons로 교체
 import { useLikeHooks } from '../../../../videoComponents/videoComponetHooks/likeHooks';
 import ClusterBottomModal from '../../../FeedItem/ClusterBottomModal';
 import CommentSection from '../../../CommentsSection/video/CommentSection';
@@ -69,7 +69,7 @@ const VideoItemFooter = ({ videoData }) => {
         <View style={styles.iconWrapper}>
           <TouchableOpacity onPress={handleLikePress} style={styles.iconOnly}>
             <Icon
-              name={likeYn === 'Y' ? 'favorite' : 'favorite-border'}
+              name={likeYn === 'Y' ? 'heart' : 'heart-outline'} // ✅ Ionicons 하트
               size={24}
               color="#FF7F50"
             />
@@ -84,7 +84,8 @@ const VideoItemFooter = ({ videoData }) => {
         {/* 댓글 토글 */}
         <View style={styles.iconWrapper}>
           <TouchableOpacity onPress={toggleComment} style={styles.iconButton}>
-            <Icon name="comment" size={24} color="#FF7F50" />
+            <Icon name="chatbubble-outline" size={24} color="#FF7F50" /> 
+            {/* ✅ Ionicons 댓글 */}
             <Text style={styles.iconText}> 댓글 {videoData.commentCount || 0}</Text>
           </TouchableOpacity>
         </View>

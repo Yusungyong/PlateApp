@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Animated,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons'; // ✅ Ionicons로 교체
 import CommentSection from '../../../CommentsSection/video/CommentSection';
 
 const CommentToggle = ({ storeId, commentCount }) => {
@@ -37,7 +37,8 @@ const CommentToggle = ({ storeId, commentCount }) => {
       {/* 댓글 아이콘 + 숫자 버튼 (LikeButton과 가로 정렬) */}
       <View style={styles.buttonRow}>
         <TouchableOpacity onPress={toggle} style={styles.toggleButton}>
-          <Icon name="comment" size={24} color="#FF7F50" />
+          <Icon name="chatbubble-outline" size={22} color="#FF7F50" /> 
+          {/* ✅ Ionicons 댓글 아이콘 */}
           <Text style={styles.iconText}>{commentCount || 0}</Text>
         </TouchableOpacity>
       </View>

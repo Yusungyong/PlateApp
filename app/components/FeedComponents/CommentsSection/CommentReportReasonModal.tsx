@@ -11,14 +11,9 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons'; // ✅ Ionicons로 변경
 
-const reasons = [
-  '스팸 또는 광고',
-  '혐오 발언 또는 괴롭힘',
-  '부적절한 콘텐츠',
-  '기타',
-];
+const reasons = ['스팸 또는 광고', '혐오 발언 또는 괴롭힘', '부적절한 콘텐츠', '기타'];
 
 const CommentReportReasonModal = ({
   visible,
@@ -35,12 +30,7 @@ const CommentReportReasonModal = ({
   };
 
   return (
-    <Modal
-      animationType="slide"
-      transparent
-      visible={visible}
-      onRequestClose={onClose}
-    >
+    <Modal animationType="slide" transparent visible={visible} onRequestClose={onClose}>
       <TouchableWithoutFeedback onPress={onClose}>
         <View style={styles.overlay}>
           <TouchableWithoutFeedback onPress={() => {}}>
@@ -51,7 +41,8 @@ const CommentReportReasonModal = ({
               <View style={styles.header}>
                 <Text style={styles.title}>신고 사유 선택</Text>
                 <TouchableOpacity onPress={onClose}>
-                  <Icon name="close" size={24} color="#333" />
+                  <Icon name="close-outline" size={24} color="#333" /> 
+                  {/* Ionicons 버전으로 교체 */}
                 </TouchableOpacity>
               </View>
 
@@ -135,13 +126,13 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   radioOuterActive: {
-    borderColor: '#000', // 검정 테마
+    borderColor: '#000',
   },
   radioInner: {
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: '#000', // 검정 테마
+    backgroundColor: '#000',
   },
   radioLabel: {
     fontSize: 14,

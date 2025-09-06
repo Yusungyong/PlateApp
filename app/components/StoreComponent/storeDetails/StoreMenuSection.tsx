@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useMemo, useRef } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity, Animated, Platform, UIManager, Easing } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import React, { useEffect, useState, useMemo } from 'react';
+import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity, Animated, Platform, UIManager } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons'; // ✅ Ionicons로 교체
 import { useApiService } from '../../../services/api/apiService';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
@@ -45,29 +45,16 @@ const AnimatedAccordion = ({ open, children }) => {
 
   useEffect(() => {
     if (contentHeight !== null) {
-      if (open) {
-        Animated.timing(animatedHeight, {
-          toValue: contentHeight,
-          duration: 330,
-          useNativeDriver: false,
-        }).start();
-      } else {
-        Animated.timing(animatedHeight, {
-          toValue: 0,
-          duration: 220,
-          useNativeDriver: false,
-        }).start();
-      }
+      Animated.timing(animatedHeight, {
+        toValue: open ? contentHeight : 0,
+        duration: open ? 330 : 220,
+        useNativeDriver: false,
+      }).start();
     }
-  }, [open, contentHeight]);
+  }, [open, contentHeight, animatedHeight]);
 
-  // 처음엔 auto, 이후엔 height로!
   if (contentHeight === null) {
-    return (
-      <View onLayout={onLayout}>
-        {open ? children : null}
-      </View>
-    );
+    return <View onLayout={onLayout}>{open ? children : null}</View>;
   }
   return (
     <Animated.View style={{ height: animatedHeight, overflow: 'hidden' }}>
@@ -75,7 +62,6 @@ const AnimatedAccordion = ({ open, children }) => {
     </Animated.View>
   );
 };
-
 
 const StoreMenuSection = ({ placeId, storeName }) => {
   const { apiCall } = useApiService();
@@ -97,6 +83,7 @@ const StoreMenuSection = ({ placeId, storeName }) => {
       .then(res => { if (isMounted) setMenu(res || []); })
       .catch(e => { if (isMounted) setError(e); })
       .finally(() => { if (isMounted) setLoading(false); });
+
     return () => { isMounted = false; };
   }, [placeId, storeName, apiCall]);
 
@@ -147,7 +134,7 @@ const StoreMenuSection = ({ placeId, storeName }) => {
           >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Icon
-                name="local-drink"
+                name="wine-outline" // ✅ Ionicons 대체
                 size={20}
                 color={openedSections[section.title] ? "#FDA085" : "#bbb"}
                 style={{ marginRight: 7 }}
@@ -162,8 +149,8 @@ const StoreMenuSection = ({ placeId, storeName }) => {
               </Text>
             </View>
             <Icon
-              name={openedSections[section.title] ? "expand-less" : "expand-more"}
-              size={24}
+              name={openedSections[section.title] ? "chevron-up-outline" : "chevron-down-outline"} // ✅ Ionicons 대체
+              size={22}
               color={openedSections[section.title] ? "#FDA085" : "#bbb"}
             />
           </TouchableOpacity>
@@ -171,11 +158,7 @@ const StoreMenuSection = ({ placeId, storeName }) => {
             {section.items.map((item, i) => (
               <View style={styles.menuCard} key={item.menuName + i}>
                 <View style={styles.menuContent}>
-                  <Text
-                    style={styles.menuName}
-                    numberOfLines={1}
-                    ellipsizeMode="tail"
-                  >
+                  <Text style={styles.menuName} numberOfLines={1} ellipsizeMode="tail">
                     {item.menuName}
                   </Text>
                   <Text

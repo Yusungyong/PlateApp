@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
   },
   card: {
     flexDirection: 'row',
-    elevation: 3,
     alignItems: 'center',
   },
   details: {

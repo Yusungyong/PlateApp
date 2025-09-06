@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const SearchBar = ({ onSearch }) => {
   const [searchText, setSearchText] = useState('');
@@ -21,7 +21,7 @@ const SearchBar = ({ onSearch }) => {
         onSubmitEditing={handleSearch} // 키보드 완료 버튼으로 검색
       />
       <Icon
-        name="magnify"
+        name="search-outline"
         size={24}
         color="#666"
         onPress={handleSearch} // 돋보기 아이콘으로 검색

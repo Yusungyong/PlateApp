@@ -1,7 +1,7 @@
 // components/MapView/Controls/UserLocationButton.tsx
 import React from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons'; // ✅ Ionicons로 교체
 
 type Props = {
   onPress: () => void;
@@ -10,7 +10,8 @@ type Props = {
 const UserLocationButton: React.FC<Props> = ({ onPress }) => {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
-      <Icon name="my-location" size={30} color="#000" />
+      <Icon name="locate-outline" size={28} color="#000" /> 
+      {/* ✅ Ionicons 현재 위치 아이콘 */}
     </TouchableOpacity>
   );
 };

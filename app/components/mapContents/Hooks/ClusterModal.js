@@ -9,7 +9,7 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons'; // ✅ Ionicons로 교체
 import { useNavigation } from '@react-navigation/native';
 
 const windowHeight = Dimensions.get('window').height;
@@ -59,7 +59,8 @@ const ClusterModal = ({ visible, data, onClose, onPlay, onComment, onInfo }) => 
               }}
               style={styles.iconButton}
             >
-              <Icon name="play-arrow" size={24} color="#000" />
+              <Icon name="play-outline" size={22} color="#000" /> 
+              {/* ✅ Ionicons play */}
               <Text style={styles.countText}>{item.videoCount}</Text>
             </TouchableOpacity>
           )}
@@ -71,7 +72,8 @@ const ClusterModal = ({ visible, data, onClose, onPlay, onComment, onInfo }) => 
               }}
               style={styles.iconButton}
             >
-              <Icon name="chat" size={24} color="#000" />
+              <Icon name="chatbubble-outline" size={22} color="#000" /> 
+              {/* ✅ Ionicons chat */}
               <Text style={styles.countText}>{item.feedCount}</Text>
             </TouchableOpacity>
           )}
@@ -113,7 +115,7 @@ const styles = StyleSheet.create({
   modalContent: {
     backgroundColor: '#fff',
     padding: 16,
-    maxHeight: windowHeight * 0.8, // <-- 80%로 높여서 스크롤 충분!
+    maxHeight: windowHeight * 0.8,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
   },

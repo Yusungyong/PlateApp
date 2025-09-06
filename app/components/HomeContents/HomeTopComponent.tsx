@@ -162,7 +162,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.07,
     shadowRadius: 3,
-    elevation: 2,
     zIndex: 5,
   },
   headerRow: {

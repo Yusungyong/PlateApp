@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import ProfileImage from '../../../common/imageUtil/ProfileImage';
 import { timeAgo } from '../../../common/dataUtil/dateUtil';
@@ -37,7 +37,7 @@ const UserInfoHeader = ({ feedData, onModalOpen }) => {
         </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={onModalOpen} style={styles.moreButton}>
-        <Icon name="more-horiz" size={24} color="#555" />
+        <Icon name="ellipsis-horizontal" size={24} color="#555" />
       </TouchableOpacity>
     </View>
   );

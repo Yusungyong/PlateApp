@@ -1,6 +1,6 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons'; // ✅ Ionicons로 교체
 import FeedLikeBar from './FeedLikeBar';
 import CommentSection from '../CommentsSection/feed/CommentSection';
 
@@ -21,7 +21,8 @@ const FeedItemFooter = ({ feedData }) => {
             initialLikeCount={feedData.likeCount}
           />
           <TouchableOpacity onPress={toggleComment} style={styles.commentContainer}>
-            <Icon name="comment" size={24} color="#FF7F50" />
+            <Icon name="chatbubble-outline" size={22} color="#FF7F50" /> 
+            {/* ✅ Ionicons chat 아이콘 */}
             <Text style={styles.iconText}>댓글 {feedData.commentCount || 0}</Text>
           </TouchableOpacity>
         </View>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons'; // for filled video
-import Feather from 'react-native-vector-icons/Feather'; // for outlined chat
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const VideoStats = ({ videoCount, feedCount }) => {
   return (
@@ -11,7 +10,7 @@ const VideoStats = ({ videoCount, feedCount }) => {
         <Text style={styles.countText}>{videoCount}</Text>
       </View>
       <View style={styles.statItem}>
-        <Feather name="message-circle" size={16} color="#FF7F50" />
+        <Ionicons name="chatbubble-outline" size={16} color="#FF7F50" />
         <Text style={styles.countText}>{feedCount}</Text>
       </View>
     </View>
@@ -22,7 +21,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     gap: 10,
-    marginLeft:10,
+    marginLeft: 10,
   },
   statItem: {
     flexDirection: 'row',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, SafeAreaView } from 'react-native';
+import { View, StyleSheet, SafeAreaView, Platform } from 'react-native';
 import CustomHeader from './CustomHeader';
 import Footer from '../components/Footer';
 import { useRoute } from '@react-navigation/native';
@@ -16,22 +16,23 @@ const CommonLayout = ({ children }) => {
   const showFooter = footerVisibleScreens.includes(route.name);
 
   const FOOTER_HEIGHT = 72; // 아이콘(40) + 텍스트 + 내부패딩을 감안한 대략값
-  // (프로젝트에 따라 64~80 사이로 미세 조정)
+  const TOP_SPACE = Platform.OS === 'ios' ? 100 : 50; // ✅ iOS/Android 분기 적용
+
   return (
     <View style={[styles.container, isPlaying && styles.playingContainer]}>
       {(!isHome && !isUpload) && <CustomHeader />}
       {isHome && (
-        <View style={styles.topSpace}>
+        <View style={[styles.topSpace, { height: TOP_SPACE }]}>
           <HomeTopComponent />
         </View>
       )}
-     <SafeAreaView
-       style={[
-         styles.content,
-         isPlaying && styles.playingContent,
-         showFooter && { paddingBottom: FOOTER_HEIGHT },
-       ]}
-     >
+      <SafeAreaView
+        style={[
+          styles.content,
+          isPlaying && styles.playingContent,
+          showFooter && { paddingBottom: FOOTER_HEIGHT },
+        ]}
+      >
         {children}
       </SafeAreaView>
       {showFooter && <Footer style={styles.footerOverlay} />}
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   topSpace: {
-    height: 100,
+    // height는 컴포넌트 내부에서 Platform 분기로 처리
   },
   content: {
     flex: 1,

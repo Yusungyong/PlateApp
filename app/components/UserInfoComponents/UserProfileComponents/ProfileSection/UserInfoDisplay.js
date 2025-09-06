@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const UserInfoDisplay = ({ displayName, onMenuPress, isDark }) => {
   return (
@@ -20,7 +20,7 @@ const UserInfoDisplay = ({ displayName, onMenuPress, isDark }) => {
         accessibilityLabel="메뉴 열기"
         hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
       >
-        <Icon name="dots-horizontal" size={24} color={isDark ? '#ccc' : '#666'} />
+        <Icon name="ellipsis-horizontal" size={24} color={isDark ? '#ccc' : '#666'} />
       </TouchableOpacity>
     </View>
   );

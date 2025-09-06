@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons'; // ✅ Ionicons로 교체
 
 type Props = {
   query: string;
@@ -11,7 +11,8 @@ type Props = {
 const SearchBar: React.FC<Props> = ({ query, onChangeQuery, onSearch }) => {
   return (
     <View style={styles.container}>
-      <Icon name="search" size={20} color="#666" style={styles.icon} />
+      <Icon name="search-outline" size={20} color="#666" style={styles.icon} /> 
+      {/* ✅ Ionicons search */}
       <TextInput
         placeholder="장소 또는 키워드 검색"
         style={styles.input}
@@ -23,7 +24,8 @@ const SearchBar: React.FC<Props> = ({ query, onChangeQuery, onSearch }) => {
       />
       {query.length > 0 && (
         <TouchableOpacity onPress={() => onChangeQuery('')}>
-          <Icon name="close" size={20} color="#999" style={styles.clearIcon} />
+          <Icon name="close-outline" size={20} color="#999" style={styles.clearIcon} /> 
+          {/* ✅ Ionicons close */}
         </TouchableOpacity>
       )}
     </View>

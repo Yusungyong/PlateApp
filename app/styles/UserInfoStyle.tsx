@@ -6,18 +6,24 @@ export const likePodsStyles = StyleSheet.create({
     padding: 15,
     backgroundColor: '#fff',
   },
-  cardContainer: {
-    flexDirection: 'row',
-    marginBottom: 15,
-    borderRadius: 10,
-    overflow: 'hidden',
-    backgroundColor: '#ffffff',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
-  },
+cardContainer: {
+  flexDirection: 'row',
+  marginBottom: 15,
+  borderRadius: 10,
+  backgroundColor: '#ffffff',
+
+  // iOS shadow
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.18,
+  shadowRadius: 6,
+
+  // Android shadow
+  elevation: 5,
+
+  // iOS는 그림자 보이게, Android는 클리핑 유지
+  overflow: Platform.OS === 'android' ? 'hidden' : 'visible',
+},
   video: {
     width: '40%',
     aspectRatio: 11 / 16,

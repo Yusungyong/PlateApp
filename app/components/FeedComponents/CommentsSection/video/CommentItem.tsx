@@ -8,7 +8,7 @@ import {
   ScrollView,
   Animated,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons'; // ✅ Ionicons로 교체
 import FastImage from 'react-native-fast-image';
 import ReplyItem from './ReplyItem';
 import CommentOptionsModal from '../CommentOptionsModal';
@@ -35,7 +35,7 @@ const CommentItem = ({
   onBlockReply,
   highlight = false,
   highlightReplyId,
-  replyRefs, // ✅ 추가
+  replyRefs,
 }) => {
   const [editing, setEditing] = useState(false);
   const [editText, setEditText] = useState(comment.content);
@@ -174,7 +174,8 @@ const CommentItem = ({
         <View style={styles.headerRow}>
           <Text style={styles.username}>{comment.username}</Text>
           <TouchableOpacity onPress={() => setModalVisible(true)}>
-            <Icon name="more-horiz" size={20} color="#888" />
+            <Icon name="ellipsis-horizontal" size={20} color="#888" /> 
+            {/* ✅ Ionicons 가로 점 3개 */}
           </TouchableOpacity>
         </View>
 
@@ -236,7 +237,7 @@ const CommentItem = ({
                   onBlock={(replyId) => onBlockReply?.(replyId)}
                   ref={(ref) => {
                     if (ref) {
-                      replyRefs[reply.replyId] = ref; // ✅ 핵심 추가
+                      replyRefs[reply.replyId] = ref;
                     }
                   }}
                 />

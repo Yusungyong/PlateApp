@@ -1,7 +1,7 @@
 // UserLocationHandler.js
 import React, { useEffect, useCallback } from 'react';
-import { TouchableOpacity, Alert, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { TouchableOpacity, StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons'; // ✅ Ionicons로 교체
 import Geolocation from 'react-native-geolocation-service';
 
 const UserLocationHandler = ({ mapRef }) => {
@@ -21,6 +21,7 @@ const UserLocationHandler = ({ mapRef }) => {
         }
       },
       (error) => {
+        console.warn('위치 가져오기 실패:', error);
       },
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
@@ -33,7 +34,8 @@ const UserLocationHandler = ({ mapRef }) => {
 
   return (
     <TouchableOpacity style={styles.locationButton} onPress={goToCurrentLocation}>
-      <Icon name="my-location" size={30} color="#000" />
+      <Icon name="locate-outline" size={28} color="#000" /> 
+      {/* ✅ Ionicons 현재 위치 아이콘 */}
     </TouchableOpacity>
   );
 };

@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useApiService } from '../../../../services/api/apiService';
+import CommonLayout from '../../../../common/CommonLayout'; // ✅ 공통 레이아웃 import
 
 const BlockedUserList = () => {
   const { apiCall } = useApiService();
@@ -17,41 +18,39 @@ const BlockedUserList = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-  fetchBlockedUsers();
-}, []);
+    fetchBlockedUsers();
+  }, []);
 
+  const fetchBlockedUsers = async () => {
+    try {
+      const username = await AsyncStorage.getItem('username');
+      if (!username) {
+        Alert.alert('오류', '로그인 정보가 없습니다.');
+        setBlockedUsers([]);
+        return;
+      }
 
-const fetchBlockedUsers = async () => {
-  try {
-    const username = await AsyncStorage.getItem('username');
-    if (!username) {
-      Alert.alert('오류', '로그인 정보가 없습니다.');
+      const res = await apiCall({
+        method: 'GET',
+        url: '/user-block-list',
+        params: { blockerUsername: username },
+      });
+
+      console.log('✅ 차단 목록 응답:', res);
+
+      if (Array.isArray(res)) {
+        setBlockedUsers(res);
+      } else {
+        setBlockedUsers([]);
+      }
+    } catch (error) {
+      console.error('차단된 사용자 목록 로딩 실패:', error);
+      Alert.alert('오류', '차단된 사용자 목록을 불러오는 데 실패했습니다.');
       setBlockedUsers([]);
-      return;
+    } finally {
+      setLoading(false);
     }
-
-    const res = await apiCall({
-      method: 'GET',
-      url: '/user-block-list',
-      params: { blockerUsername: username },
-    });
-
-    console.log('✅ 차단 목록 응답:', res); // 디버깅용
-
-    if (Array.isArray(res)) {
-      setBlockedUsers(res);
-    } else {
-      setBlockedUsers([]);
-    }
-  } catch (error) {
-    console.error('차단된 사용자 목록 로딩 실패:', error);
-    Alert.alert('오류', '차단된 사용자 목록을 불러오는 데 실패했습니다.');
-    setBlockedUsers([]); // 이 라인이 없으면 FlatList가 그릴 목록이 없어 렌더링 안됨
-  } finally {
-    setLoading(false); // 반드시 호출
-  }
-};
-
+  };
 
   const handleUnblock = async (blockedUsername: string) => {
     Alert.alert(
@@ -68,7 +67,7 @@ const fetchBlockedUsers = async () => {
 
               await apiCall({
                 method: 'POST',
-                url: '/user-unblock', // ✅ 서버에 존재해야 함
+                url: '/user-unblock',
                 data: { blockerUsername, blockedUsername },
               });
 
@@ -109,21 +108,23 @@ const fetchBlockedUsers = async () => {
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>차단된 사용자 목록</Text>
-      {loading ? (
-        <ActivityIndicator size="large" color="#FF7F50" style={{ marginTop: 30 }} />
-      ) : blockedUsers.length === 0 ? (
-        <Text style={styles.emptyText}>차단된 사용자가 없습니다.</Text>
-      ) : (
-        <FlatList
-          data={blockedUsers}
-          keyExtractor={(item) => item.id?.toString()}
-          renderItem={renderItem}
-          contentContainerStyle={{ paddingBottom: 40 }}
-        />
-      )}
-    </View>
+    <CommonLayout>
+      <View style={styles.container}>
+        <Text style={styles.title}>차단된 사용자 목록</Text>
+        {loading ? (
+          <ActivityIndicator size="large" color="#FF7F50" style={{ marginTop: 30 }} />
+        ) : blockedUsers.length === 0 ? (
+          <Text style={styles.emptyText}>차단된 사용자가 없습니다.</Text>
+        ) : (
+          <FlatList
+            data={blockedUsers}
+            keyExtractor={(item) => item.id?.toString()}
+            renderItem={renderItem}
+            contentContainerStyle={{ paddingBottom: 40 }}
+          />
+        )}
+      </View>
+    </CommonLayout>
   );
 };
 
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     paddingHorizontal: 20,
-    paddingTop: 80, // ✅ 상단 여백 추가
+    paddingTop: 20, // ✅ CommonHeader가 있으니 80 → 20으로 조정
   },
   title: {
     fontSize: 18,

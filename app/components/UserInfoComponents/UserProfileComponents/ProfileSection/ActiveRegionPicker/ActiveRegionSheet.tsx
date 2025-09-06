@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
-import Icon from "react-native-vector-icons/Feather";
+import Icon from "react-native-vector-icons/Ionicons";
 import RegionListView from "./RegionListView";
 import RegionConfirmView from "./RegionConfirmView";
 
@@ -27,14 +27,16 @@ const ActiveRegionSheet = ({ onClose, onRegionSelect }) => {
       <View style={styles.header}>
         {step === "confirm" ? (
           <TouchableOpacity onPress={() => setStep("list")}>
-            <Icon name="chevron-left" size={24} color="#444" />
+            <Icon name="chevron-back" size={24} color="#444" />
           </TouchableOpacity>
-        ) : <View style={{ width: 24 }} />}
+        ) : (
+          <View style={{ width: 24 }} />
+        )}
         <Text style={styles.title}>
           {step === "list" ? "활동 지역 선택" : "이 지역으로 등록할까요?"}
         </Text>
         <TouchableOpacity onPress={onClose}>
-          <Icon name="x" size={24} color="#444" />
+          <Icon name="close" size={24} color="#444" />
         </TouchableOpacity>
       </View>
 
@@ -42,7 +44,10 @@ const ActiveRegionSheet = ({ onClose, onRegionSelect }) => {
         {step === "list" ? (
           <RegionListView onSelectRegion={handleRegionFinalSelect} />
         ) : (
-          <RegionConfirmView regionPath={selectedRegionPath} onConfirm={handleConfirm} />
+          <RegionConfirmView
+            regionPath={selectedRegionPath}
+            onConfirm={handleConfirm}
+          />
         )}
       </View>
     </View>

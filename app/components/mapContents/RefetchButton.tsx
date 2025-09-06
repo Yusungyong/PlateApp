@@ -1,7 +1,7 @@
 // components/MapView/Controls/RefetchButton.tsx
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons'; // ✅ Ionicons로 교체
 
 type Props = {
   onPress: () => void;
@@ -11,7 +11,8 @@ const RefetchButton: React.FC<Props> = ({ onPress }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onPress} style={styles.row}>
-        <Icon name="refresh" size={18} color="#333" style={styles.icon} />
+        <Icon name="refresh-outline" size={18} color="#333" style={styles.icon} /> 
+        {/* ✅ Ionicons refresh */}
         <Text style={styles.text}>다시 찾기</Text>
       </TouchableOpacity>
     </View>

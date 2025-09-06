@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons'; // ✅ Ionicons로 교체
 import { useFeedLikeHooks } from '../Hooks/feedItemHooks/useFeedLikeHooks';
 import ClusterBottomModal from './ClusterBottomModal';
 import LoginRequiredModal from '../../../auth/LoginRequiredModal';
@@ -39,7 +39,7 @@ const FeedLikeBar = ({ feedId, initialLikeYn = 'N', initialLikeCount = 0 }) => {
     <View style={styles.likeContainer}>
       <TouchableOpacity onPress={handleLikePress} style={styles.iconWrapper}>
         <Icon
-          name={likeYn === 'Y' ? 'favorite' : 'favorite-border'}
+          name={likeYn === 'Y' ? 'heart' : 'heart-outline'} // ✅ Ionicons 하트
           size={24}
           color="#FF7F50"
         />

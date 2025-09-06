@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 import ReplyComponent from './ReplyComponent';
 import { profileBucket } from '../../../config/config';
@@ -65,12 +65,10 @@ const CommentItem: React.FC<CommentItemProps> = memo(({
   const handleReplyClick = () => setIsReplying(true);
 
   const handleAddReply = async () => {
-
     if (!isLoggedIn || role === 'ROLE_GUEST') {
       setLoginModalVisible(true);
       return;
     }
-
 
     if (!replyText.trim()) return;
     try {
@@ -86,7 +84,7 @@ const CommentItem: React.FC<CommentItemProps> = memo(({
 
   const handleReport = () => {
     setOptionsVisible(false);
-    setTimeout(() => setReportModalVisible(true), 250); // 기존 모달이 닫힌 뒤 열림
+    setTimeout(() => setReportModalVisible(true), 250);
   };
 
   const handleReportSubmit = async (reason: string) => {
@@ -124,7 +122,7 @@ const CommentItem: React.FC<CommentItemProps> = memo(({
             style={styles.profileImage}
           />
         ) : (
-          <Icon name="account-circle" size={40} color="#888" />
+          <Icon name="person-circle-outline" size={40} color="#888" />
         )}
       </View>
 
@@ -138,7 +136,7 @@ const CommentItem: React.FC<CommentItemProps> = memo(({
             }}
             style={styles.menuIcon}
           >
-            <Icon name="dots-horizontal" size={20} color="#888" />
+            <Icon name="ellipsis-horizontal" size={20} color="#888" />
           </TouchableOpacity>
         </View>
 

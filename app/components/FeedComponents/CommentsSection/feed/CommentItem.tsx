@@ -10,7 +10,7 @@ import {
   findNodeHandle,
   UIManager,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons'; // ✅ Ionicons로 교체
 import FastImage from 'react-native-fast-image';
 import ReplyItem from './ReplyItem';
 import CommentOptionsModal from '../CommentOptionsModal';
@@ -85,7 +85,7 @@ const CommentItem: React.FC<Props> = memo(({
 
   const isMine = comment.username === currentUsername;
 
-  // highlight 애니메이션 (정지/클린업 포함)
+  // highlight 애니메이션
   const anim = useRef(new Animated.Value(0)).current;
   useEffect(() => {
     if (!highlight) return;
@@ -105,7 +105,7 @@ const CommentItem: React.FC<Props> = memo(({
 
   const bgColor = anim.interpolate({ inputRange: [0, 1], outputRange: [COLORS.bg, COLORS.highlightBg] });
 
-  // 특정 reply 위치로 스크롤(가능한 경우만)
+  // 특정 reply 위치로 스크롤
   const replyRefs = useRef<Record<number, any>>({});
   useEffect(() => {
     if (!highlightReplyId || !isExpanded || !scrollViewRef?.current) return;
@@ -124,7 +124,7 @@ const CommentItem: React.FC<Props> = memo(({
         (_x, y) => (scrollViewRef.current as any)?.scrollToOffset?.({ offset: y, animated: true })
       );
     } catch {
-      // 측정 실패 시 조용히 패스 (no-op)
+      // no-op
     }
   }, [highlightReplyId, isExpanded, scrollViewRef]);
 
@@ -143,7 +143,7 @@ const CommentItem: React.FC<Props> = memo(({
         submittedAt: formatISO(new Date()),
       });
       setReportModalVisible(false);
-      setHiddenByReport(true); // ✅ prop mutate 대신 로컬 상태로 표시 제한
+      setHiddenByReport(true);
     } catch (e) {
       console.error('신고 실패:', e);
       alert('신고에 실패했습니다.');
@@ -210,7 +210,8 @@ const CommentItem: React.FC<Props> = memo(({
             {comment.username}{isMine ? ' (나)' : ''}
           </Text>
           <TouchableOpacity onPress={() => setModalVisible(true)} hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}>
-            <Icon name="more-horiz" size={20} color={COLORS.sub} />
+            <Icon name="ellipsis-horizontal" size={20} color={COLORS.sub} /> 
+            {/* ✅ Ionicons 버전으로 교체 */}
           </TouchableOpacity>
         </View>
 
@@ -263,7 +264,7 @@ const CommentItem: React.FC<Props> = memo(({
           </View>
         )}
 
-        {/* 답글 리스트 (부모 스크롤에 종속) */}
+        {/* 답글 리스트 */}
         {isExpanded && (
           <FlatList
             data={replies}
@@ -291,7 +292,7 @@ const CommentItem: React.FC<Props> = memo(({
           />
         )}
 
-        {/* 모달들 */}
+        {/* 모달 */}
         <CommentOptionsModal visible={modalVisible} onClose={() => setModalVisible(false)} options={modalOptions} />
         <CommentReportReasonModal
           visible={reportModalVisible}

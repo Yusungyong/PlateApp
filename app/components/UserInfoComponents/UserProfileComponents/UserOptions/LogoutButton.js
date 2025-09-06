@@ -1,11 +1,11 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const LogoutButton = ({ onLogout }) => {
   return (
     <TouchableOpacity style={styles.logoutIconContainer} onPress={onLogout}>
-      <Icon name="logout" size={30} color="#007AFF" />
+      <Icon name="log-out-outline" size={30} color="#007AFF" />
       <Text style={styles.logoutText}>로그아웃</Text>
     </TouchableOpacity>
   );

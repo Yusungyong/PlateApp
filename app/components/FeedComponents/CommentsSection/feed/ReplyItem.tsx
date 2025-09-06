@@ -1,7 +1,7 @@
 import React, { useState, memo, useEffect, useRef, useCallback } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Animated } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons'; // ✅ Ionicons로 교체
 import { formatDistanceToNow, formatISO } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -49,7 +49,7 @@ const ReplyItem: React.FC<Props> = memo(({ reply, currentUsername, onUpdate, onD
   const formattedTime = formatDistanceToNow(new Date(reply.updatedAt), { addSuffix: true, locale: ko });
   const isEdited = reply.updatedAt !== reply.createdAt;
 
-  // highlight animation (정지/클린업)
+  // highlight animation
   const anim = useRef(new Animated.Value(0)).current;
   useEffect(() => {
     if (!highlight) return;
@@ -113,7 +113,7 @@ const ReplyItem: React.FC<Props> = memo(({ reply, currentUsername, onUpdate, onD
         submittedAt: formatISO(new Date()),
       });
       setReportModalVisible(false);
-      setHiddenByReport(true); // ✅ prop mutate 대신 로컬 상태
+      setHiddenByReport(true);
     } catch (e) {
       console.error('신고 실패:', e);
       alert('신고에 실패했습니다.');
@@ -150,7 +150,8 @@ const ReplyItem: React.FC<Props> = memo(({ reply, currentUsername, onUpdate, onD
             {reply.username}{isMine ? ' (나)' : ''}
           </Text>
           <TouchableOpacity onPress={() => setModalVisible(true)} hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}>
-            <Icon name="more-horiz" size={20} color={COLORS.sub} />
+            <Icon name="ellipsis-horizontal" size={20} color={COLORS.sub} /> 
+            {/* ✅ Ionicons 가로 점 3개 */}
           </TouchableOpacity>
         </View>
 

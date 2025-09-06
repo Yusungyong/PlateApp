@@ -14,6 +14,7 @@ import {
 import AppStatusBar from '../ui/AppStatusBar';
 import FcmManager from '../notifications/FcmManager';
 import { navigateFromNotification } from '../notifications/navigateFromNotification';
+import '../common/autoLoad'; // Ionicons loadFont
 
 /**
  * NavigationContainer 래퍼

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "827561195500",
+    "project_id": "my-plate-app-6d2d7",
+    "storage_bucket": "my-plate-app-6d2d7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:827561195500:android:c04c9872ff39186bb0b2c9",
+        "android_client_info": {
+          "package_name": "com.plateapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDB9zy1ywhgS5KlR55btNJmNQa0rKlXQk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

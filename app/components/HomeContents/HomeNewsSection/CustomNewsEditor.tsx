@@ -4,13 +4,26 @@ import BlockList from './components/BlockList';
 import EditorToolbar from './components/EditorToolbar';
 import PreviewModal from './components/PreviewModal';
 import { useNavigation } from '@react-navigation/native';
-import { getAspectRatios, pickImages, uniqueId, normalizeUri } from './utils/image';
-import { getImageBlocks, getTextBlocks, getTitleBlock, isValidToSave } from './utils/validation';
+import {
+  getAspectRatios,
+  pickImages,
+  uniqueId,
+  normalizeUri,
+} from './utils/image';
+import {
+  getImageBlocks,
+  getTextBlocks,
+  getTitleBlock,
+  isValidToSave,
+} from './utils/validation';
 import { HOME_SCREEN_NAME, MAX_IMAGES_PER_PICK } from './constants';
 import type { BlocksState } from './types';
 import { useApiService } from '../../../services/api/apiService';
 import { useAuth } from '../../../auth/AuthProvider';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+// ✅ 공통 레이아웃 불러오기
+import CommonLayout from '../../../common/CommonLayout';
 
 const CustomNewsEditor: React.FC = () => {
   const [blocks, setBlocks] = useState<BlocksState>([]);
@@ -23,52 +36,83 @@ const CustomNewsEditor: React.FC = () => {
   const insets = useSafeAreaInsets();
   const saveDisabled = useMemo(() => !isValidToSave(blocks), [blocks]);
 
+  // 이미지 블록 추가
   const addImageBlock = async () => {
     try {
       const uris = await pickImages({ selectionLimit: MAX_IMAGES_PER_PICK });
       if (!uris.length) return;
       const aspectRatios = await getAspectRatios(uris);
-      setBlocks((prev) => [...prev, { id: uniqueId(), type: 'image', uris, aspectRatios }]);
+      setBlocks((prev) => [
+        ...prev,
+        { id: uniqueId(), type: 'image', uris, aspectRatios },
+      ]);
     } catch (e: any) {
       if (e?.code === 'android_permission_denied')
-        Alert.alert('권한 필요', '갤러리 접근 권한을 허용해주세요. 설정 > 앱 > 권한에서 변경할 수 있어요.');
-      else Alert.alert('이미지 선택 실패', e?.message || '이미지를 불러오지 못했습니다.');
+        Alert.alert(
+          '권한 필요',
+          '갤러리 접근 권한을 허용해주세요. 설정 > 앱 > 권한에서 변경할 수 있어요.'
+        );
+      else
+        Alert.alert(
+          '이미지 선택 실패',
+          e?.message || '이미지를 불러오지 못했습니다.'
+        );
     }
   };
 
-  const addTextBlock = () => setBlocks((prev) => [...prev, { id: uniqueId(), type: 'text', content: '' }]);
-  const addTitleBlock = () => setBlocks((prev) => [...prev, { id: uniqueId(), type: 'title', content: '' }]);
+  const addTextBlock = () =>
+    setBlocks((prev) => [...prev, { id: uniqueId(), type: 'text', content: '' }]);
+
+  const addTitleBlock = () =>
+    setBlocks((prev) => [...prev, { id: uniqueId(), type: 'title', content: '' }]);
 
   const updateContent = (id: string, content: string) => {
     setBlocks((prev) =>
-      prev.map((b) => (b.id === id && (b.type === 'title' || b.type === 'text') ? { ...b, content } : b))
+      prev.map((b) =>
+        b.id === id && (b.type === 'title' || b.type === 'text')
+          ? { ...b, content }
+          : b
+      )
     );
   };
 
-  // 이미지 삭제/재배치 반영
   const updateImages = (id: string, nextUris: string[], nextRatios?: number[]) => {
     setBlocks((prev) =>
-      prev.map((b) => (b.id === id && b.type === 'image' ? { ...b, uris: nextUris, aspectRatios: nextRatios } : b))
+      prev.map((b) =>
+        b.id === id && b.type === 'image'
+          ? { ...b, uris: nextUris, aspectRatios: nextRatios }
+          : b
+      )
     );
   };
 
-  const deleteBlock = (id: string) => setBlocks((prev) => prev.filter((b) => b.id !== id));
+  const deleteBlock = (id: string) =>
+    setBlocks((prev) => prev.filter((b) => b.id !== id));
 
+  // 저장
   const saveContent = async () => {
     try {
       const titleBlock = getTitleBlock(blocks) as any;
       const textBlocks = getTextBlocks(blocks) as any[];
       const imageBlocks = getImageBlocks(blocks) as any[];
 
-      if (!titleBlock) return Alert.alert('제목 누락', '제목은 반드시 입력해야 합니다.');
-      if (textBlocks.length === 0) return Alert.alert('내용 누락', '텍스트 블록에 최소 한 줄 이상의 내용을 입력해주세요.');
-      if (imageBlocks.length === 0) return Alert.alert('이미지 누락', '이미지 블록에 최소 한 장 이상의 이미지를 추가해주세요.');
+      if (!titleBlock)
+        return Alert.alert('제목 누락', '제목은 반드시 입력해야 합니다.');
+      if (textBlocks.length === 0)
+        return Alert.alert(
+          '내용 누락',
+          '텍스트 블록에 최소 한 줄 이상의 내용을 입력해주세요.'
+        );
+      if (imageBlocks.length === 0)
+        return Alert.alert(
+          '이미지 누락',
+          '이미지 블록에 최소 한 장 이상의 이미지를 추가해주세요.'
+        );
 
       const combinedText = textBlocks.map((b) => b.content).join('\n\n');
       const imageFiles: string[] = imageBlocks.flatMap((b) => b.uris || []);
 
       const formData = new FormData();
-
       imageFiles.forEach((uri, index) => {
         const filename = uri.split('/').pop() || `image_${index}.jpg`;
         formData.append('images', {
@@ -109,8 +153,7 @@ const CustomNewsEditor: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }} edges={['top', 'bottom']}>
-      {/* ✅ iOS에선 KeyboardAvoidingView 비활성화 (점프 방지). Android만 'height' 사용 */}
+    <CommonLayout>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'android' ? 'height' : undefined}
@@ -135,11 +178,14 @@ const CustomNewsEditor: React.FC = () => {
               />
             }
           />
-
-          <PreviewModal visible={previewVisible} onClose={() => setPreviewVisible(false)} blocks={blocks} />
+          <PreviewModal
+            visible={previewVisible}
+            onClose={() => setPreviewVisible(false)}
+            blocks={blocks}
+          />
         </View>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </CommonLayout>
   );
 };
 
